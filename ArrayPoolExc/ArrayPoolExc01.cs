@@ -69,7 +69,7 @@ namespace ArrayPoolExc
             return reads;
         }
 
-        public int ReadStreamWithManyRents(int bufferSize)
+        public int ReadStreamWithManyRents(int bufferSize, bool returnArray = true)
         {
             var reads = 0;
 
@@ -83,7 +83,10 @@ namespace ArrayPoolExc
                 {
                     // get data from buffer
                     // ...
-                    pool.Return(buffer);
+                    if (returnArray)
+                    {
+                        pool.Return(buffer);
+                    }
                     reads++;
 
                     buffer = pool.Rent(bufferSize);

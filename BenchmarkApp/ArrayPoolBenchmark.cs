@@ -17,7 +17,7 @@ namespace BenchmarkApp
         [Params(10, 100, 1000, 4096, 10000, 100000)]
         public int BufferSize;
 
-        [Params(1, 10, 100)]
+        [Params(1, 10)]
         public int Connections;
 
         [Benchmark]
@@ -42,6 +42,12 @@ namespace BenchmarkApp
         public async Task ReadStreamWithManyRents()
         {
             await RunMany(() => new ArrayPoolExc01().ReadStreamWithManyRents(BufferSize));
+        }
+
+        [Benchmark]
+        public async Task ReadStreamWithManyRentsNoReturns()
+        {
+            await RunMany(() => new ArrayPoolExc01().ReadStreamWithManyRents(BufferSize, false));
         }
 
         private async Task RunMany(Action action)
